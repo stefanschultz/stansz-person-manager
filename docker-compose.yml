@@ -1,0 +1,20 @@
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: stansz_fastapi_app
+    ports:
+      - "8000:8000"
+    volumes:
+        - ./app:/app
+
+  nginx:
+    image: nginx:latest
+    container_name: stansz_nginx_server
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - fastapi
